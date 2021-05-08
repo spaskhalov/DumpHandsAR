@@ -19,3 +19,7 @@ Desktop.ini
 /Recordings
 /UserSettings
 /Temp
+Assets/Test/Script/.idea/.idea.Script.dir/.idea
+obj
+BurstAotSettings_iOS.json
+*.DotSettings
