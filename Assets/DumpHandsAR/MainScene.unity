@@ -269,10 +269,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainUI: {fileID: 439729867}
-  _deviceName: 
   _resolution: {x: 1920, y: 1080}
   _frameRate: 60
-  _dummyImage: {fileID: 0}
+  _blitMaterial: {fileID: 2100000, guid: cc05d92a1d8748ab85ba09994724eade, type: 2}
 --- !u!1 &577104479
 GameObject:
   m_ObjectHideFlags: 0

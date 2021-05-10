@@ -29,8 +29,9 @@ namespace DumpHandsAR
     
         void LateUpdate()
         {
+            if(_webcam.Texture != null)
             // Feed the input image to the Hand pose pipeline.
-            Pipeline.ProcessImage(_webcam.Texture);
+                Pipeline.ProcessImage(_webcam.Texture);
         }
     }
 }

@@ -6,24 +6,20 @@ namespace DumpHandsAR
     public sealed class WebCamTextureInput : MonoBehaviour
     {
         [SerializeField] RawImage _mainUI = null;
-        [SerializeField] string _deviceName = "";
         [SerializeField] Vector2Int _resolution = new Vector2Int(1920, 1080);
         [SerializeField] float _frameRate = 60;
-        [SerializeField] Texture2D _dummyImage = null;
+        [SerializeField] private Material _blitMaterial;
 
         WebCamTexture _webcam;
         RenderTexture _buffer;
 
-        public Texture Texture
-            => _dummyImage != null ? (Texture)_dummyImage : (Texture)_buffer;
+        public Texture Texture => _buffer;
         
     
         void Start()
         {
-            if (_dummyImage != null) return;
-            _webcam = new WebCamTexture
-                (_deviceName, _resolution.x, _resolution.y, (int)_frameRate);
-            _buffer = new RenderTexture(_resolution.x, _resolution.y, 0);
+            _webcam = new WebCamTexture(_resolution.x, _resolution.y, (int)_frameRate);
+            
             _webcam.Play();
         }
     
@@ -35,18 +31,27 @@ namespace DumpHandsAR
     
         void Update()
         {
-            if (_dummyImage != null) return;
             if (!_webcam.didUpdateThisFrame) return;
-    
-            var aspect1 = (float)_webcam.width / _webcam.height;
-            var aspect2 = (float)_resolution.x / _resolution.y;
-            var gap = aspect2 / aspect1;
-    
-            var vflip = _webcam.videoVerticallyMirrored;
-            var scale = new Vector2(gap, vflip ? -1 : 1);
-            var offset = new Vector2((1 - gap) / 2, vflip ? 1 : 0);
-    
-            Graphics.Blit(_webcam, _buffer, scale, offset);
+            // if(_webcam.width < 100 && _webcam.height < 100)
+            //     return;
+
+            if (_buffer == null)
+            {
+                var isRotated = _webcam.videoRotationAngle == 90 || _webcam.videoRotationAngle == -90;
+                var width = !isRotated ? _webcam.width : _webcam.height;
+                var height = !isRotated ? _webcam.height : _webcam.width;
+                _buffer = new RenderTexture(width, height, 0);
+                
+                _mainUI.GetComponent<AspectRatioFitter>().aspectRatio = (float)width / height;
+                
+                var vflip = _webcam.videoVerticallyMirrored;
+                var scale = new Vector2(1, vflip ? -1 : 1);
+
+                _blitMaterial.SetFloat("_RotationAngle", - _webcam.videoRotationAngle);
+                _blitMaterial.SetVector("_Scale", new Vector4(scale.x, scale.y, 0,0));
+            }
+            
+            Graphics.Blit(_webcam, _buffer, _blitMaterial);
         }
 
         private void LateUpdate()
