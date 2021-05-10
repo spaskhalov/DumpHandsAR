@@ -46,8 +46,8 @@ namespace DumpHandsAR
         private void Update()
         {
             var fingersState = GetFingersState();
-            if(_prevFingersState != fingersState)
-                Debug.Log($"Fingers: {fingersState:F}");
+            // if(_prevFingersState != fingersState)
+            //     Debug.Log($"Fingers: {fingersState:F}");
             _prevFingersState = fingersState;
 
             var targetGesture = GetGesture(fingersState);
