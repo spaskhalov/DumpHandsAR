@@ -15,16 +15,52 @@ namespace DumpHandsAR
             Ring = 8,
             Pinky = 16
         }
-
         [SerializeField] private PipeLineRunner pipeLineRunner;
 
+        private Gesture _currentGesture;
         private FingersState _prevFingersState;
+
+        public event Action<Gesture> GestureChanged;
+        
+        public Gesture CurrentGesture
+        {
+            get => _currentGesture;
+            private set
+            {
+                if (value != _currentGesture)
+                {
+                    _currentGesture = value;
+                    GestureChanged?.Invoke(value);
+                }
+            }
+        }
+
+        private void Start()
+        {
+            GestureChanged += gesture => Debug.Log($"Gesture: {gesture.ToString()}");
+        }
+
         private void Update()
         {
             var fingersState = GetFingersState();
             if(_prevFingersState != fingersState)
                 Debug.Log($"Fingers: {fingersState:F}");
             _prevFingersState = fingersState;
+
+            CurrentGesture = GetGesture(fingersState);
+        }
+
+        private Gesture GetGesture(FingersState fingersState)
+        {
+            switch (fingersState)
+            {
+                case FingersState.Index | FingersState.Pinky:
+                    return Gesture.Rock;
+                case FingersState.Thumb | FingersState.Index | FingersState.Middle | FingersState.Ring | FingersState.Pinky:
+                    return Gesture.HighFive;
+            }
+
+            return Gesture.None;
         }
         
         private FingersState GetFingersState()
@@ -65,5 +101,12 @@ namespace DumpHandsAR
             var dot = Vector3.Dot(refDirection, compareDirection);
             return dot > 0.7;
         }
+    }
+
+    public enum Gesture
+    {
+        None,
+        Rock,
+        HighFive
     }
 }
