@@ -16,6 +16,12 @@ namespace DumpHandsAR
             Pipeline = new HandPipeline(_resources);
         }
     
+        private void OnGUI()
+        {
+            if(_webcam.Texture != null)
+                GUI.DrawTexture(new Rect(0, 0, 512, 512), _webcam.Texture, ScaleMode.ScaleToFit);
+        }
+        
         void OnDestroy()
         {
             Pipeline.Dispose();
