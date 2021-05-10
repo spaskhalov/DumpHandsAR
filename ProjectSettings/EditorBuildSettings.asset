@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/TestVisualizer.unity
-    guid: 16e2f07633259412a9eae42088d3972d
+    path: Assets/DumpHandsAR/MainScene.unity
+    guid: 467a01357707247b58e812071e1784aa
   m_configObjects: {}
