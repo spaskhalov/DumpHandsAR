@@ -8,6 +8,8 @@ namespace MediaPipe.HandPose {
 
 public partial class HandPipeline
 {
+    readonly int[] _countReadCache = new int[1];
+    
     void RunPipeline(Texture input)
     {
         var cs = _resources.compute;
@@ -39,6 +41,9 @@ public partial class HandPipeline
         cs.SetBuffer(2, "_crop_region", _buffer.region);
         cs.SetBuffer(2, "_crop_output", _buffer.crop);
         cs.Dispatch(2, CropSize / 8, CropSize / 8, 1);
+        
+        _detector.palm.CountBuffer.GetData(_countReadCache);
+        HandIsVisible = _countReadCache[0] > 0;
 
         // Hand landmark detection
         _detector.landmark.ProcessImage(_buffer.crop);

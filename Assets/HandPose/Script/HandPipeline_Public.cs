@@ -55,6 +55,8 @@ public partial class HandPipeline
 
     public void ProcessImage(Texture image)
       => RunPipeline(image);
+    
+    public bool HandIsVisible { get; private set; }
 
     #endregion
 }

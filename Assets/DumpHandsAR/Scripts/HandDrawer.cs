@@ -28,6 +28,8 @@ namespace DumpHandsAR
     
         void OnRenderObject()
         {
+            if(!_pipeLineRunner.Pipeline.HandIsVisible)
+                return;
             // Key point circles
             _material.keys.SetPass(0);
             Graphics.DrawProceduralNow(MeshTopology.Triangles, 96, 21);
