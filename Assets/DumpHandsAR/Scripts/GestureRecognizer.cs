@@ -16,9 +16,12 @@ namespace DumpHandsAR
             Pinky = 16
         }
         [SerializeField] private PipeLineRunner pipeLineRunner;
+        [SerializeField] private float gestureResetDelay = 0.5f;
 
         private Gesture _currentGesture;
         private FingersState _prevFingersState;
+        private Gesture _nextGesture;
+        private float _nextGestureTime = float.NaN;
 
         public event Action<Gesture> GestureChanged;
         
@@ -47,7 +50,20 @@ namespace DumpHandsAR
                 Debug.Log($"Fingers: {fingersState:F}");
             _prevFingersState = fingersState;
 
-            CurrentGesture = GetGesture(fingersState);
+            var targetGesture = GetGesture(fingersState);
+            
+            if (_nextGesture != targetGesture)
+            {
+                _nextGesture = targetGesture;
+                _nextGestureTime = CurrentGesture == Gesture.None ? 0 : Time.time + gestureResetDelay;
+            }
+            
+            if (!float.IsNaN(_nextGestureTime) && Time.time >= _nextGestureTime)
+            {
+                CurrentGesture = targetGesture;
+                _nextGestureTime = float.NaN;
+            }
+            
         }
 
         private Gesture GetGesture(FingersState fingersState)
