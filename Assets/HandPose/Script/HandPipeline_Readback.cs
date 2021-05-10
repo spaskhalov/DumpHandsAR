@@ -7,7 +7,7 @@ namespace MediaPipe.HandPose {
 // GPU to CPU readback implementation of the hand pipeline class
 //
 
-sealed partial class HandPipeline
+public sealed partial class HandPipeline
 {
     #region Read cache operations
 

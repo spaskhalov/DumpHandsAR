@@ -6,7 +6,7 @@ namespace MediaPipe.HandPose {
 // Public part of the hand pipeline class
 //
 
-partial class HandPipeline
+public partial class HandPipeline
 {
     #region Detection data accessors
 

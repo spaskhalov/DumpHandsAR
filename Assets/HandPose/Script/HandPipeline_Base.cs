@@ -8,7 +8,7 @@ namespace MediaPipe.HandPose {
 // Basic implementation of the hand pipeline class
 //
 
-sealed partial class HandPipeline : System.IDisposable
+public sealed partial class HandPipeline : System.IDisposable
 {
     #region Private objects
 

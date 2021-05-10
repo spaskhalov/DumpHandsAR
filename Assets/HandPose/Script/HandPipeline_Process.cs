@@ -6,7 +6,7 @@ namespace MediaPipe.HandPose {
 // Image processing part of the hand pipeline class
 //
 
-partial class HandPipeline
+public partial class HandPipeline
 {
     void RunPipeline(Texture input)
     {
