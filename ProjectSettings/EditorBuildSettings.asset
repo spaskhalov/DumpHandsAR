@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DumpHandsAR/MainScene.unity
     guid: 467a01357707247b58e812071e1784aa
-  m_configObjects: {}
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 2e0cd5ce8124d4044818e090fc06afea, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: c72d40817b83243c09c10cce193c5e8e, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: bb0ef40e6292f471caf7517eba6500e3, type: 2}
